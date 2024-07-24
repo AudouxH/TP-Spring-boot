@@ -5,6 +5,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Component
@@ -23,6 +25,11 @@ public class JwtUtil {
     // Méthode pour extraire le nom d'utilisateur
     public String extractUsername(String token) {
         return extractClaims(token).getSubject();
+    }
+
+    public LocalDateTime extractIssuedAt(String token) {
+        Date issuedAt = extractClaims(token).getIssuedAt();
+        return issuedAt.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     // Méthode pour vérifier la validité du JWT
