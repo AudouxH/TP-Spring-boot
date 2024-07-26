@@ -1,20 +1,15 @@
+INSERT INTO app_user (username, email, password, role, tokenInvalidatedAt) VALUES
+('user1', 'user1@example.com', '$2a$10$7Q76eO1QV09Kj4Y2TmxtiO.x/fBdT4ixkxN1F5mkgEBlf3DxS9Juy', 'USER', NULL),
+('user2', 'user2@example.com', '$2a$10$U9J1OD2.jbE1/h41wG46Ouy7kF4u1oO4Uzeh.s1os7n8rx6Kr3.JG', 'USER', NULL);
 
-INSERT INTO sessions (session_name, session_desc) VALUES
-('Session 1', 'Description de la session 1'),
-('Session 2', 'Description de la session 2'),
-('Session 3', 'Description de la session 3');
+-- Inserting initial data for to_do_list
+INSERT INTO toDoList (username) VALUES
+('user1'),
+('user2');
 
-INSERT INTO speakers (first_name, last_name, title, company, speaker_bio) VALUES
-('John', 'Doe', 'Software Engineer', 'TechCorp', 'John is a senior software engineer at TechCorp with over 10 years of experience.'),
-('Jane', 'Smith', 'Project Manager', 'InnovateX', 'Jane has been managing projects at InnovateX for 5 years.'),
-('Emily', 'Jones', 'Data Scientist', 'DataWorks', 'Emily specializes in data analysis and machine learning.');
+-- Inserting initial data for task
+INSERT INTO task (checked, libelle, todoListId) VALUES
+(false, 'Task 1 for User 1', 1),
+(true, 'Task 2 for User 1', 1),
+(false, 'Task 1 for User 2', 2);
 
-INSERT INTO session_speakers (session_id, speaker_id) VALUES
-(1, 1),
-(1, 2),
-(2, 1),
-(3, 3);
-
-INSERT INTO app_user (username, password, role) VALUES
-('user1', '$2a$10$7.6C/KKlF3VJfD5yph.zsO5s9QGmU61LpT6B7bUk9f/eJ8wKhHRfW', 'USER'),
-('admin', '$2a$10$7.6C/KKlF3VJfD5yph.zsO5s9QGmU61LpT6B7bUk9f/eJ8wKhHRfW', 'ADMIN');

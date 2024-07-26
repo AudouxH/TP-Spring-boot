@@ -1,11 +1,15 @@
 package com.example.demo.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity(name = "app_user")
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
+@Table(name = "app_user", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
+@Data
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,43 +23,10 @@ public class User {
     private String role = "USER";
     private LocalDateTime tokenInvalidatedAt;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
+    public User(String username, String email, String password) {
+        super();
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+        this.email = email;
         this.password = password;
     }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getEmail() {return email;}
-
-    public void setEmail(String email) {this.email = email;}
-
-    public LocalDateTime getTokenInvalidatedAt() {return tokenInvalidatedAt;}
-
-    public void setTokenInvalidatedAt(LocalDateTime tokenInvalidateAt) {this.tokenInvalidatedAt = tokenInvalidateAt;}
 }

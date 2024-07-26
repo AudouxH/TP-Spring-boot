@@ -1,6 +1,5 @@
 package com.example.demo.config;
 
-import com.example.demo.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,9 +15,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -37,11 +33,11 @@ public class SecurityConfig {
                         // root for user sign up (take unique username, email and password)
                         .requestMatchers("/signup").permitAll()
                         // root that return dashboard datas (all task of the user)
-                        .requestMatchers("/dashboard").hasRole("USER")
+                        .requestMatchers("/todolist/**").hasRole("USER")
+                        // root get and post that return or modify an user task by id (is_checked, libelle, doneBefore)
+                        .requestMatchers("/tasks/**").hasRole("USER")
                         // root get and post that return or modify the user datas (username, email and password)
                         .requestMatchers("/profil").hasRole("USER")
-                        // root get and post that return or modify an user task by id (is_checked, libelle, doneBefore)
-                        .requestMatchers("/dashboard:todoID").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

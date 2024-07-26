@@ -35,13 +35,19 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    // checking root to know if API is available
+    @GetMapping("/")
+    public ResponseEntity<?> isApiAvailable() {
+        return ResponseEntity.ok().body("spring boot api is available");
+    }
+
     // Signup root which register a new user
     @PostMapping("/signup")
     public ResponseEntity<JwtResponse> signup(@RequestBody User user) {
 
-        if (user.getUsername() == null || user.getUsername().isEmpty() || userDetailsService.usernameExists(user.getUsername())) {
+        if (user.getUsername() == null || user.getUsername().isEmpty() || userDetailsService.existsByUsername(user.getUsername())) {
             return ResponseEntity.badRequest().body(new JwtResponse("Invalid username"));
-        } else if (user.getEmail().contains("@") || user.getEmail().isEmpty()) {
+        } else if (user.getEmail() == null || user.getEmail().isEmpty() || !user.getEmail().contains("@") ) {
             return ResponseEntity.badRequest().body(new JwtResponse("Invalid email"));
         } else if (user.getPassword() == null || user.getPassword().isEmpty() || user.getPassword().length() < 8) {
             return ResponseEntity.badRequest().body(new JwtResponse("Invalid password"));
@@ -80,7 +86,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public ResponseEntity<?> logout(@RequestHeader("Authorization") String authorizationHeader) {
         try {
             String token = authorizationHeader.replace("Bearer ", "");
